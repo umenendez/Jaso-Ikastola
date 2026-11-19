@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jaso Ikastola · Informazio gunea</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ef;--card:#fff;--text:#1d2b24;--muted:#5e6d65;--accent:#7bb8ec;--line:#e2ded2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121915;--card:#1b251f;--text:#e8efe9;--muted:#9fb0a5;--line:#2b3a31}}
+:root[data-theme="dark"]{--bg:#121915;--card:#1b251f;--text:#e8efe9;--muted:#9fb0a5;--line:#2b3a31}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}
+h1,h2,h3{font-family:'Fredoka',system-ui,sans-serif;font-weight:600}
+#hdr,nav,#bus,main,#bar,.qr{max-width:960px;margin:auto}
+.hd{display:flex;align-items:center;gap:.9rem;padding:1.4rem 1.2rem .6rem}.hd div{flex:1}.hd h1{margin:0;font-size:1.7rem;color:#1d4f7c}.hd p{margin:.2rem 0 0;color:var(--muted)}
+.hd img{height:56px;max-width:90px;object-fit:contain}.lg{font-size:2.4rem}
+nav{display:flex;gap:.5rem;overflow-x:auto;padding:.6rem 1.2rem}
+button,input,textarea,select{font:inherit;color:inherit}
+nav button{border:2px solid var(--c,var(--accent));background:var(--card);padding:.45rem .9rem;border-radius:99px;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--c,var(--accent));color:#0f2f4d}
+#bus{padding:.2rem 1.2rem}#bus input{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:.55rem 1rem}
+main{padding:0 1.2rem 1.5rem}h2{margin:.8rem 0 .2rem}.intro{color:var(--muted);margin:0 0 1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.tema{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c,var(--accent));border-radius:14px;padding:1rem 1.1rem;transition:transform .15s,box-shadow .15s}
+.tema.clic{cursor:pointer}.tema.clic:hover{transform:translateY(-3px);box-shadow:0 8px 20px #0002}
+.tema h3{margin:0 0 .3rem;font-size:1.05rem}.f{font-size:.8rem;color:var(--muted)}
+.tema p{margin:.5rem 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.portada{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:.6rem}
+.cod{display:inline-block;background:var(--c,var(--accent));color:#fff;border-radius:6px;font-size:.75rem;padding:0 .4rem;margin-right:.4rem;vertical-align:middle}
+.chip{font-size:.72rem;border-radius:99px;padding:.1rem .6rem;color:#fff;margin-right:.4rem}
+.e-abierto{background:#2f6f5e}.e-cerrado{background:#8a8f8c}.e-pronto{background:#d08a3c}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem;margin:.8rem 0}
+.tile{background:var(--accent);color:#0f2f4d;border:0;border-radius:16px;padding:1rem .6rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.2rem;transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}.tile span{font-size:2rem}.tile b{font-family:'Fredoka',system-ui}.tile small{opacity:.85}
+.vacio{color:var(--muted);border:1px dashed var(--line);border-radius:14px;padding:1.2rem;text-align:center}
+.b{border:1px solid var(--accent);background:var(--accent);color:#0f2f4d;border-radius:10px;padding:.4rem .8rem;cursor:pointer}
+.b.p{background:var(--accent);color:#0f2f4d;border-color:var(--accent)}.adm{margin-top:.6rem}
+.mas{border:2px dashed var(--c,var(--accent));background:transparent;color:var(--c,var(--accent));border-radius:14px;min-height:80px;cursor:pointer}
+#bar{padding:0 1.2rem 1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.9rem;margin-top:1rem}
+.gal figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.gal img{width:100%;display:block;cursor:zoom-in}.gal figcaption{padding:.6rem .8rem;font-size:.9rem}
+.qr{padding:1rem 1.2rem 2.5rem;text-align:center;border-top:1px solid var(--line)}
+#qrbox{display:inline-block;background:#fff;padding:12px;border-radius:12px}.qr p{color:var(--muted);font-size:.9rem}
+#modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;z-index:20;padding:1rem}
+#modal.on{display:flex}#caja{background:var(--card);border-radius:16px;padding:1.2rem;width:100%;max-width:440px;max-height:90%;overflow:auto}
+#caja label{display:block;font-size:.85rem;color:var(--muted);margin-top:.7rem}
+#caja input,#caja textarea,#caja select{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:.5rem}
+#caja input[type=color]{height:42px;padding:2px}#caja .row{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+#zoom{display:none;position:fixed;inset:0;background:#000d;z-index:30;align-items:center;justify-content:center;padding:1rem}#zoom.on{display:flex}#zoom img{max-width:86%;max-height:100%}
+.zb{position:absolute;top:50%;background:#0006;color:#fff;border:0;border-radius:50%;width:44px;height:44px;font-size:1.6rem;cursor:pointer}.zl{left:8px}.zr{right:8px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#222;color:#fff;border-radius:99px;padding:.5rem 1rem;display:none;z-index:40}
+#cartel{display:none}
+@media print{body>*:not(#cartel){display:none!important}#cartel{display:block!important;text-align:center;padding:2rem}#cartel img.lo{height:90px}#cartel h1{font-size:2.4rem}}
+
+/* ===== ESTILO INFORMATIVO JASO IKASTOLA ===== */
+:root{
+  --bg:#f4f7f5;--card:#fff;--text:#18352b;--muted:#64756d;
+  --accent:#397b57;--line:#dce7df;--brand-dark:#173f32;
+  --brand-mid:#397b57;--brand-light:#e8f1eb;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101a16;--card:#1a2921;--text:#e8f1eb;--muted:#a8b8ae;
+    --line:#304238;--brand-dark:#10251d;--brand-mid:#6eaa82;--brand-light:#243b2d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101a16;--card:#1a2921;--text:#e8f1eb;--muted:#a8b8ae;
+  --line:#304238;--brand-dark:#10251d;--brand-mid:#6eaa82;--brand-light:#243b2d;
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(ellipse at 90% 0%,rgba(91,153,111,.10),transparent 34rem),
+    var(--bg);
+  color:var(--text);font-size:16px;
+}
+h1,h2,h3{letter-spacing:-.025em}
+#hdr{
+  max-width:none;margin:0;background:linear-gradient(120deg,#173f32 0%,#285f45 58%,#397b57 100%);
+  color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 5px 24px rgba(20,58,42,.16);
+}
+#hdr:after{
+  content:"";position:absolute;width:330px;height:330px;border:1px solid rgba(255,255,255,.12);
+  border-radius:50%;right:-95px;top:-205px;box-shadow:0 0 0 32px rgba(255,255,255,.035),0 0 0 68px rgba(255,255,255,.025);
+  pointer-events:none;
+}
+.hd{
+  max-width:1120px;min-height:142px;margin:auto;padding:1.6rem 1.5rem;
+  position:relative;z-index:1;gap:1.1rem;
+}
+.hd h1{color:#fff;font-size:clamp(1.8rem,4vw,2.55rem);line-height:1.1}
+.hd p{color:rgba(255,255,255,.82);font-size:1rem;margin-top:.55rem}
+.hd img{height:68px;max-width:110px;background:#fff;padding:7px;border-radius:12px}
+#lgb{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.45);font-weight:700}
+nav{
+  max-width:1120px;padding:1rem 1.5rem .8rem;gap:.55rem;
+  scrollbar-width:thin;
+}
+nav button{
+  border:1px solid var(--line);background:var(--card);color:var(--text);
+  padding:.58rem 1rem;font-size:.92rem;font-weight:650;
+  box-shadow:0 2px 7px rgba(20,50,35,.04);transition:.18s ease;
+}
+nav button:hover{border-color:var(--brand-mid);transform:translateY(-1px)}
+nav button.on{background:var(--brand-mid);border-color:var(--brand-mid);color:#fff}
+#bus{max-width:1120px;padding:.45rem 1.5rem 1rem}
+#bus input{
+  border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem;
+  background:var(--card);box-shadow:0 3px 12px rgba(20,50,35,.035);
+}
+#bus input:focus,#caja input:focus,#caja textarea:focus,#caja select:focus{
+  outline:3px solid rgba(57,123,87,.16);border-color:var(--brand-mid);
+}
+#bar{max-width:1120px;padding:0 1.5rem 1rem}
+main{max-width:1120px;padding:0 1.5rem 2.5rem;min-height:260px}
+h2{font-size:1.55rem;margin:1.3rem 0 .25rem;color:var(--brand-dark)}
+.intro{font-size:.98rem;margin-bottom:1.2rem}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:1rem}
+.tema{
+  border:1px solid var(--line);border-top:4px solid var(--c,var(--accent));
+  border-radius:16px;padding:1.15rem;background:var(--card);
+  box-shadow:0 4px 15px rgba(25,55,39,.045);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.tema.clic:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(25,55,39,.11)}
+.tema h3{font-size:1.12rem;line-height:1.3;margin-bottom:.55rem}
+.tema p{line-height:1.55;color:var(--muted);-webkit-line-clamp:4}
+.portada{height:158px;border-radius:11px;margin-bottom:.8rem}
+.cod{border-radius:5px;font-weight:700;padding:.12rem .45rem}
+.chip{font-weight:700;letter-spacing:.01em;padding:.18rem .65rem}
+.tiles{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.9rem;margin:1.25rem 0 1.8rem}
+.tile{
+  min-height:112px;background:var(--card);color:var(--brand-dark);
+  border:1px solid var(--line);border-bottom:4px solid var(--brand-mid);
+  border-radius:15px;padding:1.1rem .8rem;box-shadow:0 4px 14px rgba(25,55,39,.05);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.tile:hover{transform:translateY(-3px);box-shadow:0 9px 20px rgba(25,55,39,.1)}
+.tile b{font-size:1rem;color:var(--brand-dark)}
+.tile small{font-size:.82rem;color:var(--muted)}
+.vacio{background:var(--card);border:1px dashed #b8cbbd;color:var(--muted);padding:1.6rem}
+.b{
+  border:1px solid var(--brand-mid);background:var(--card);color:var(--brand-dark);
+  border-radius:9px;padding:.55rem .9rem;font-weight:650;transition:.18s ease;
+}
+.b:hover{background:var(--brand-light)}
+.b.p{background:var(--brand-mid);border-color:var(--brand-mid);color:#fff}
+.b.p:hover{filter:brightness(.94)}
+.mas{border-color:#a9c5b1;color:var(--brand-dark);border-radius:15px;padding:1rem;font-weight:650}
+.mas:hover{background:var(--brand-light)}
+.gal{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.gal figure{border-radius:14px;box-shadow:0 4px 15px rgba(25,55,39,.06)}
+.gal img{max-height:300px;object-fit:cover}
+.gal figcaption{color:var(--muted)}
+.qr{
+  max-width:none;background:#eaf1ec;border-top:1px solid #d7e4da;
+  padding:2rem 1.5rem 2.5rem;
+}
+.qr h2{margin-top:0;color:var(--brand-dark)}
+.qr p{color:#607268}
+#qrbox{box-shadow:0 3px 14px rgba(20,50,35,.09)}
+#adminbtn{background:transparent}
+#modal{backdrop-filter:blur(5px)}
+#caja{border:1px solid var(--line);box-shadow:0 20px 70px rgba(0,0,0,.2);border-radius:18px}
+#caja h3{color:var(--brand-dark);font-size:1.3rem}
+#toast{box-shadow:0 5px 20px rgba(0,0,0,.2)}
+a{ text-underline-offset:3px }
+@media(max-width:600px){
+  .hd{min-height:122px;padding:1.2rem 1rem}
+  .hd h1{font-size:1.75rem}
+  .hd img{height:52px;max-width:72px}
+  nav{padding:.8rem 1rem}
+  #bus,main,#bar{padding-left:1rem;padding-right:1rem}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile{min-height:100px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+}
+
+
+/* ===== JASO · IDENTIDAD CROMÁTICA Y ACABADO CONTEMPORÁNEO ===== */
+:root{
+  --bg:#faf8fc;--card:#fff;--text:#292238;--muted:#777184;--line:#ece6f1;
+  --accent:#70449a;--brand-dark:#352348;--brand-mid:#70449a;--brand-light:#f1eaf7;
+  --jaso-purple:#70449a;--jaso-orange:#f08a32;--jaso-yellow:#f3c744;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#17131d;--card:#241e2c;--text:#f5eff9;--muted:#bcb0c6;--line:#3c3047;
+    --brand-dark:#f4eafa;--brand-mid:#b18bd0;--brand-light:#35283f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17131d;--card:#241e2c;--text:#f5eff9;--muted:#bcb0c6;--line:#3c3047;
+  --brand-dark:#f4eafa;--brand-mid:#b18bd0;--brand-light:#35283f;
+}
+body{
+  background:
+    radial-gradient(ellipse at 8% 8%,rgba(112,68,154,.09),transparent 27rem),
+    radial-gradient(ellipse at 95% 35%,rgba(240,138,50,.07),transparent 24rem),
+    var(--bg);
+  letter-spacing:.005em;
+}
+#hdr{
+  max-width:none;position:relative;overflow:hidden;
+  background:linear-gradient(118deg,#3e2859 0%,#68418e 56%,#8052a3 100%);
+  box-shadow:0 12px 34px rgba(59,36,81,.18);
+}
+#hdr:before{
+  content:"";position:absolute;inset:auto 0 0;height:7px;
+  background:linear-gradient(90deg,var(--jaso-purple) 0 42%,var(--jaso-orange) 42% 72%,var(--jaso-yellow) 72% 100%);
+}
+#hdr:after{
+  content:"";position:absolute;width:390px;height:390px;right:-110px;top:-245px;
+  border:1px solid rgba(255,255,255,.18);border-radius:48% 52% 62% 38%;
+  transform:rotate(24deg);box-shadow:0 0 0 34px rgba(255,255,255,.045),0 0 0 76px rgba(255,255,255,.03);
+}
+.hd{max-width:1160px;min-height:158px;padding:2rem 1.5rem 2.1rem;z-index:1}
+.hd h1{font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-weight:850;letter-spacing:-.055em;font-size:clamp(2rem,4.5vw,3rem)}
+.hd p{font-size:1.02rem;color:rgba(255,255,255,.86);max-width:620px}
+.hd img{height:72px;max-width:112px;border-radius:15px;background:#fff;padding:8px;box-shadow:0 6px 20px #24133255}
+#lgb{border:1px solid #ffffff70;background:#ffffff16;color:white;border-radius:999px}
+nav{max-width:1160px;padding:1.15rem 1.5rem .8rem;gap:.55rem}
+nav button{
+  border:1px solid var(--line);border-radius:999px;padding:.62rem 1.05rem;
+  font-size:.91rem;font-weight:700;background:var(--card);color:var(--text);
+  box-shadow:0 3px 12px rgba(49,32,65,.045);transition:transform .2s,border-color .2s,background .2s;
+}
+nav button:hover{transform:translateY(-2px);border-color:var(--jaso-purple)}
+nav button.on{background:var(--jaso-purple);border-color:var(--jaso-purple);color:#fff;box-shadow:0 5px 15px #70449a35}
+#bus{max-width:1160px;padding:.65rem 1.5rem 1.1rem}
+#bus input{
+  padding:.9rem 1.1rem;border-radius:14px;border:1px solid var(--line);
+  background:var(--card);box-shadow:0 5px 20px rgba(48,31,63,.045);
+}
+#bus input::placeholder{color:#9a91a2}
+main{max-width:1160px;padding:0 1.5rem 3rem;min-height:300px}
+h2{font-size:clamp(1.45rem,3vw,1.85rem);font-weight:750;letter-spacing:-.04em;color:var(--brand-dark);margin:1.5rem 0 .35rem}
+.intro{font-size:1rem;color:var(--muted);margin-bottom:1.35rem}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,275px),1fr));gap:1.1rem}
+.tema{
+  position:relative;border:1px solid var(--line);border-top:0;border-radius:18px;
+  padding:1.2rem 1.2rem 1.25rem;background:var(--card);
+  box-shadow:0 5px 22px rgba(44,29,57,.055);overflow:hidden;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.tema:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--c,var(--jaso-purple))}
+.tema.clic:hover{transform:translateY(-5px);box-shadow:0 15px 32px rgba(44,29,57,.12)}
+.tema h3{font-size:1.12rem;line-height:1.32;font-weight:750;margin:.1rem 0 .65rem}
+.tema p{font-size:.94rem;line-height:1.65;color:var(--muted);-webkit-line-clamp:4}
+.f{font-size:.79rem;color:var(--muted)}
+.portada{height:170px;border-radius:13px;margin-bottom:.85rem}
+.cod{border-radius:7px;padding:.15rem .48rem;font-size:.7rem;font-weight:800}
+.chip{display:inline-flex;align-items:center;font-size:.7rem;font-weight:750;letter-spacing:.015em;padding:.22rem .65rem;border-radius:999px}
+.tiles{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1rem;margin:1.2rem 0 2rem}
+.tile{
+  position:relative;min-height:125px;align-items:flex-start;text-align:left;
+  background:var(--card);color:var(--text);border:1px solid var(--line);
+  border-radius:18px;padding:1.1rem;box-shadow:0 5px 20px rgba(44,29,57,.055);
+  overflow:hidden;transition:transform .2s,box-shadow .2s;
+}
+.tile:after{content:"";position:absolute;right:-22px;bottom:-34px;width:92px;height:92px;border-radius:50%;background:var(--tile-accent,var(--brand-light));opacity:.65}
+.tile:nth-child(3n+1){--tile-accent:#eee4f6}
+.tile:nth-child(3n+2){--tile-accent:#fff0e2}
+.tile:nth-child(3n){--tile-accent:#fff7d9}
+.tile:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(44,29,57,.1)}
+.tile b{font-size:1rem;font-weight:750;color:var(--text);z-index:1}
+.tile small{font-size:.82rem;color:var(--muted);z-index:1}
+.vacio{background:var(--card);border:1px dashed #d7c9e2;border-radius:16px;padding:1.8rem}
+.b{border:1px solid #d8cbe2;background:var(--card);color:var(--brand-dark);border-radius:10px;padding:.58rem .95rem;font-weight:700}
+.b:hover{background:var(--brand-light)}
+.b.p{background:var(--jaso-purple);border-color:var(--jaso-purple);color:#fff}
+.b.p:hover{filter:brightness(.94)}
+.mas{border:1.5px dashed #cbb9d9;border-radius:16px;color:var(--jaso-purple);font-weight:750;min-height:110px}
+.mas:hover{background:var(--brand-light)}
+.gal{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.gal figure{border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px rgba(44,29,57,.06)}
+.gal img{max-height:320px;object-fit:cover}
+.gal figcaption{color:var(--muted)}
+.qr{max-width:none;background:#f0eaf5;border-top:0;padding:2.5rem 1.5rem 3rem}
+.qr h2{color:#432b5a;margin-top:0}
+.qr p{color:#76677f}
+#qrbox{border-radius:16px;box-shadow:0 7px 24px rgba(56,35,75,.12)}
+#modal{backdrop-filter:blur(7px)}
+#caja{border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 80px #1c102b40}
+#caja h3{color:var(--brand-dark);font-size:1.35rem}
+@media(max-width:620px){
+ .hd{min-height:132px;padding:1.45rem 1rem 1.65rem}
+ .hd h1{font-size:1.95rem}
+ .hd img{height:55px;max-width:76px}
+ nav{padding:.9rem 1rem .7rem}
+ #bus,main,#bar{padding-left:1rem;padding-right:1rem}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+ .tile{min-height:112px;padding:.9rem}
+ .grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+<div id="hdr"></div>
+<nav id="nav"></nav>
+<div id="bus"><input id="q" type="search"></div>
+<div id="bar"></div>
+<main id="main"></main>
+<section class="qr"><h2 id="qrh"></h2><div id="qrbox"></div><p id="qrt"></p>
+<p><button class="b" id="cartbtn"></button> <button class="b" id="adminbtn">Administrador</button></p></section>
+<div id="modal"><div id="caja"></div></div>
+<div id="zoom"></div><div id="toast"></div><div id="cartel"></div>
+<script type="application/json" id="datos">{"Actividades":[{"titulo":"Ejemplo de actividad","titulo_eu":"","fecha":"2026-11-16","texto":"Aquí irá la descripción.","texto_eu":"","enlace":"","estado":"abierto","limite":"2026-12-15","alta":1794000000000,"imgs":[]}],"Cursos":[],"Trabajo":[],"Voluntariado":[],"Beca":[],"Concurso":[],"_cfg":{"nombre":"Jaso Ikastola","color":"#70449a","logo":""}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ===== CONFIGURACIÓN ===== */
+const MAX=100;
+/* Para que los cambios se vean en todos los dispositivos, rellena estas dos líneas con los datos de tu proyecto de Supabase */
+const SB_URL="https://doimazoavcpefugfjfzc.supabase.co", SB_KEY="sb_publishable__eTIChyoIjw7gaZeTuMNpw_g3xcHS0T";
+let TOK=null;
+const NOMBRES=["Actividades","Cursos","Trabajo","Voluntariado","Beca","Concurso"];
+const EU=["Jarduerak","Ikastaroak","Lana","Boluntariotza","Beka","Lehiaketa"];
+const EMO=["","","","","",""], COL=["#70449a","#f08a32","#e3b72f","#51418c","#e46f45","#8a5aa7"], PRE=["A","CU","T","V","B","CO"];
+const INTRO={es:["Lo que se hace en la ikastola.","Cursos y formaciones.","Ofertas y trabajos.","Oportunidades de voluntariado.","Becas y ayudas.","Concursos abiertos."],eu:["Ikastolan egiten dena.","Ikastaroak eta prestakuntzak.","Lan eskaintzak.","Boluntariotza aukerak.","Bekak eta laguntzak.","Lehiaketa irekiak."]};
+const TX={es:{sub:"Actividades, cursos, becas y más: todo en un solo sitio.",ini:"Inicio",nov:"Novedades",vacio:"Aún no hay temas aquí.",nada:"Sin resultados.",vol:"← Volver",mas:"Más información",bus:"Buscar…",comp:"Compartir",noimg:"Aún no hay imágenes.",hasta:"Hasta",abierto:"Plazo abierto",cerrado:"Cerrado",pronto:"Próximamente",qr:"Comparte esta web",qrt:"Escanea el código QR para abrirla en el móvil.",cart:"Imprimir cartel QR",copiado:"Enlace copiado",esc:"Escanea para ver todas las actividades"},
+eu:{sub:"Jarduerak, ikastaroak, bekak eta gehiago: dena leku batean.",ini:"Hasiera",nov:"Berriak",vacio:"Oraindik ez dago ezer hemen.",nada:"Emaitzarik ez.",vol:"← Itzuli",mas:"Informazio gehiago",bus:"Bilatu…",comp:"Partekatu",noimg:"Oraindik ez dago irudirik.",hasta:"Epea",abierto:"Epea irekita",cerrado:"Itxita",pronto:"Laster",qr:"Partekatu web hau",qrt:"Eskaneatu QR kodea mugikorrean irekitzeko.",cart:"Inprimatu QR kartela",copiado:"Esteka kopiatuta",esc:"Eskaneatu jarduera guztiak ikusteko"}};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let D=JSON.parse($("datos").textContent),cur=-1,ver=null,admin=false,q="",lang="es",zl=[],zi=0;
+try{lang=localStorage.getItem("ik_lang")||"es";}catch(e){}
+if(!SB_URL)try{const g=localStorage.getItem("ik_borrador");if(g&&sessionStorage.getItem("ik_admin")==="1"){D=JSON.parse(g);admin=true;}}catch(e){}
+NOMBRES.forEach(n=>{if(!Array.isArray(D[n]))D[n]=[];});
+D._cfg=Object.assign({nombre:"Jaso Ikastola",color:"#70449a",logo:""},D._cfg||{});
+const t=k=>TX[lang][k], nom=i=>lang==="eu"?EU[i]:NOMBRES[i];
+const tx=(w,f)=>lang==="eu"&&w[f+"_eu"]?w[f+"_eu"]:w[f];
+let tg;function guarda(){if(SB_URL){clearTimeout(tg);tg=setTimeout(nube,600);return;}try{localStorage.setItem("ik_borrador",JSON.stringify(D));}catch(e){}}
+async function nube(){if(!TOK){aviso("Sin sesión de administrador");return;}try{const r=await fetch(SB_URL+"/rest/v1/web?on_conflict=id",{method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+TOK,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({id:1,data:D})});aviso(r.ok?"Guardado en la nube":r.status===401?"Sesión caducada: sal y vuelve a entrar":"Error al guardar ("+r.status+")");}catch(e){aviso("Error de conexión");}}
+async function carga(){try{const r=await fetch(SB_URL+"/rest/v1/web?id=eq.1&select=data",{headers:{apikey:SB_KEY}});if(!r.ok){aviso("No se pudo leer la nube ("+r.status+")");return;}const j=await r.json();if(!j[0]){aviso("La nube está vacía: guarda algo como administrador");return;}if(j[0]&&j[0].data){D=j[0].data;NOMBRES.forEach(n=>{if(!Array.isArray(D[n]))D[n]=[];});D._cfg=Object.assign({nombre:"Jaso Ikastola",color:"#70449a",logo:""},D._cfg||{});pinta();}}catch(e){aviso("Error de conexión con la nube");}}
+function cerrar(){$("modal").classList.remove("on");}
+function aviso(m){const e=$("toast");e.textContent=m;e.style.display="block";setTimeout(()=>e.style.display="none",4000);}
+function reduce(f,max,tipo){return new Promise(ok=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok(c.toDataURL(tipo||"image/jpeg",.72));};im.onerror=()=>ok(null);im.src=r.result;};r.onerror=()=>ok(null);r.readAsDataURL(f);});}
+function chip(w){return w.estado?"<span class='chip e-"+w.estado+"'>"+t(w.estado)+"</span>"+(w.limite?"<span class='f'>"+t("hasta")+": "+esc(w.limite)+"</span>":""):"";}
+function cab(){
+  document.documentElement.style.setProperty("--accent",D._cfg.color);document.documentElement.lang=lang;
+  $("hdr").innerHTML="<div class='hd'>"+(D._cfg.logo?"<img src='"+esc(D._cfg.logo)+"' alt=''>":"")+"<div><h1>"+esc(D._cfg.nombre)+"</h1><p>"+t("sub")+"</p></div><button class='b' id='lgb'>"+(lang==="es"?"EU":"ES")+"</button></div>";
+  $("lgb").onclick=()=>{lang=lang==="es"?"eu":"es";try{localStorage.setItem("ik_lang",lang);}catch(e){}pinta();};
+  $("q").placeholder=t("bus");$("qrh").textContent=t("qr");$("qrt").textContent=t("qrt");$("cartbtn").textContent=t("cart");
+}
+function nav(){
+  $("nav").innerHTML="";
+  [[t("ini"),-1,"var(--accent)"]].concat(NOMBRES.map((n,i)=>[nom(i),i,COL[i]])).forEach(a=>{
+    const b=document.createElement("button");b.textContent=a[0];b.className=a[1]===cur?"on":"";
+    b.onclick=()=>{cur=a[1];ver=null;q="";$("q").value="";pinta();};$("nav").appendChild(b);});
+}
+function tarjeta(w,s,i){return "<article class='tema clic' style='--c:"+COL[s]+"' data-s='"+s+"' data-v='"+i+"'>"+(w.imgs&&w.imgs[0]?"<img class='portada' src='"+esc(w.imgs[0].src)+"' alt=''>":"")+"<h3><span class='cod'>"+PRE[s]+(i+1)+"</span>"+esc(tx(w,"titulo"))+"</h3>"+chip(w)+"<div class='f'>"+esc(w.fecha)+"</div><p>"+esc(tx(w,"texto"))+"</p>"+(admin&&cur===s&&!q?"<div class='adm'><button class='b' data-e='"+i+"'>Editar</button></div>":"")+"</article>";}
+function seccion(){const n=NOMBRES[cur],L=D[n];
+  let h="<h2>"+nom(cur)+"</h2><p class='intro'>"+INTRO[lang][cur]+"</p>";
+  if(!L.length&&!admin)h+="<div class='vacio'>"+t("vacio")+"</div>";
+  h+="<div class='grid'>"+L.map((w,i)=>tarjeta(w,cur,i)).join("");
+  if(admin&&L.length<MAX)h+="<button class='mas' data-e='nuevo'>+ Añadir ventana ("+L.length+"/"+MAX+")</button>";
+  return h+"</div>";}
+function inicio(){
+  let h="<div class='tiles'>"+NOMBRES.map((n,i)=>"<button class='tile' data-g='"+i+"'><b>"+nom(i)+"</b><small>"+D[n].length+"</small></button>").join("")+"</div>";
+  const nv=[];NOMBRES.forEach((n,s)=>D[n].forEach((w,i)=>{if(w.alta)nv.push({w,s,i});}));nv.sort((a,b)=>b.w.alta-a.w.alta);
+  return h+"<h2>"+t("nov")+"</h2>"+(nv.length?"<div class='grid'>"+nv.slice(0,6).map(o=>tarjeta(o.w,o.s,o.i)).join("")+"</div>":"<div class='vacio'>"+t("vacio")+"</div>");}
+function resultados(){const s=q.trim().toLowerCase(),r=[];
+  NOMBRES.forEach((n,si)=>D[n].forEach((w,i)=>{if([w.titulo,w.titulo_eu,w.texto,w.texto_eu].join(" ").toLowerCase().includes(s))r.push(tarjeta(w,si,i));}));
+  return "<h2>"+esc(q)+"</h2>"+(r.length?"<div class='grid'>"+r.join("")+"</div>":"<div class='vacio'>"+t("nada")+"</div>");}
+function detalle(){const w=D[NOMBRES[cur]][ver];w.imgs=w.imgs||[];
+  let h="<p><button class='b' id='vol'>"+t("vol")+"</button> <button class='b' id='comp'>"+t("comp")+"</button></p><h2 style='color:"+COL[cur]+"'><span class='cod' style='--c:"+COL[cur]+"'>"+PRE[cur]+(ver+1)+"</span>"+esc(tx(w,"titulo"))+"</h2><p>"+chip(w)+"</p><div class='f'>"+esc(w.fecha)+"</div><p>"+esc(tx(w,"texto"))+"</p>"
+   +(w.enlace?"<p><a style='color:#1d4f7c' href='"+esc(w.enlace)+"' target='_blank' rel='noopener'>"+t("mas")+"</a></p>":"");
+  if(admin)h+="<p><button class='b p' id='addimg'>+ Subir imágenes</button> <button class='b' id='addurl'>+ Imagen por enlace</button><input type='file' id='fil' accept='image/*' multiple hidden></p>";
+  if(!w.imgs.length)h+="<div class='vacio'>"+t("noimg")+"</div>";
+  h+="<div class='gal'>"+w.imgs.map((m,i)=>"<figure><img src='"+esc(m.src)+"' data-z='"+i+"' alt=''><figcaption>"+esc(m.pie)+(admin?"<div class='adm'><button class='b' data-p='"+i+"'>Info / quitar</button></div>":"")+"</figcaption></figure>").join("")+"</div>";
+  return h;}
+function bindDet(){const w=D[NOMBRES[cur]][ver];
+  $("vol").onclick=()=>{ver=null;pinta();};
+  $("comp").onclick=async()=>{const u=location.href;try{if(navigator.share){await navigator.share({title:tx(w,"titulo"),url:u});return;}await navigator.clipboard.writeText(u);aviso(t("copiado"));}catch(e){}};
+  $("main").querySelectorAll("[data-z]").forEach(im=>im.onclick=()=>{zl=w.imgs.map(m=>m.src);zoom(+im.dataset.z);});
+  if(!admin)return;
+  $("addimg").onclick=()=>$("fil").click();
+  $("fil").onchange=async e=>{for(const f of e.target.files){const s=await reduce(f,1000);if(s)w.imgs.push({src:s,pie:""});}guarda();pinta();};
+  $("addurl").onclick=()=>{$("caja").innerHTML="<h3>Imagen por enlace</h3><label>Dirección de la imagen</label><input id='u' placeholder='https://...'><div class='row'><button class='b p' id='ok'>Añadir</button><button class='b' id='no'>Cancelar</button></div>";$("modal").classList.add("on");$("no").onclick=cerrar;$("ok").onclick=()=>{const u=$("u").value.trim();if(u){w.imgs.push({src:u,pie:""});guarda();cerrar();pinta();}};};
+  $("main").querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{const i=+b.dataset.p;$("caja").innerHTML="<h3>Información de la imagen</h3><label>Texto</label><textarea id='pie' rows='4'>"+esc(w.imgs[i].pie)+"</textarea><div class='row'><button class='b p' id='ok'>Guardar</button><button class='b' id='no'>Cancelar</button><button class='b' id='qt'>Quitar imagen</button></div>";$("modal").classList.add("on");$("no").onclick=cerrar;$("ok").onclick=()=>{w.imgs[i].pie=$("pie").value.trim();guarda();cerrar();pinta();};$("qt").onclick=()=>{if($("qt").dataset.s){w.imgs.splice(i,1);guarda();cerrar();pinta();}else{$("qt").dataset.s=1;$("qt").textContent="¿Seguro? Pulsa otra vez";}};});}
+function zoom(i){zi=(i+zl.length)%zl.length;const m=zl.length>1;
+  $("zoom").innerHTML=(m?"<button class='zb zl' id='zp'>‹</button>":"")+"<img src='"+esc(zl[zi])+"'>"+(m?"<button class='zb zr' id='zn'>›</button>":"");
+  $("zoom").classList.add("on");
+  if(m){$("zp").onclick=e=>{e.stopPropagation();zoom(zi-1);};$("zn").onclick=e=>{e.stopPropagation();zoom(zi+1);};}
+  $("zoom").onclick=()=>{$("zoom").classList.remove("on");$("zoom").innerHTML="";};}
+document.addEventListener("keydown",e=>{if(!$("zoom").classList.contains("on"))return;if(e.key==="Escape")$("zoom").onclick();if(e.key==="ArrowLeft")zoom(zi-1);if(e.key==="ArrowRight")zoom(zi+1);});
+function barra(){
+  $("bar").innerHTML=admin?"<span class='f'>"+(SB_URL?"Administrador (nube conectada)":"MODO LOCAL: los cambios NO se ven en otros dispositivos")+"</span><button class='b p' id='exp'>Descargar web actualizada</button><button class='b' id='aju'>Ajustes</button><button class='b' id='sal'>Salir</button>":"";
+  if(!admin)return;
+  $("exp").onclick=exportar;$("sal").onclick=()=>{admin=false;TOK=null;try{sessionStorage.removeItem("ik_admin");}catch(e){}pinta();};
+  $("aju").onclick=()=>{$("caja").innerHTML="<h3>Ajustes de la web</h3><label>Nombre</label><input id='a1' value=\""+esc(D._cfg.nombre)+"\"><label>Color principal</label><input id='a2' type='color' value='"+D._cfg.color+"'><label>Logo (imagen)</label><input id='a3' type='file' accept='image/*'><div class='row'><button class='b p' id='ok'>Guardar</button><button class='b' id='no'>Cancelar</button></div>";$("modal").classList.add("on");$("no").onclick=cerrar;
+    $("ok").onclick=async()=>{D._cfg.nombre=$("a1").value.trim()||D._cfg.nombre;D._cfg.color=$("a2").value;const f=$("a3").files[0];if(f){const s=await reduce(f,300,"image/png");if(s)D._cfg.logo=s;}guarda();cerrar();pinta();};};}
+function editar(k){
+  const n=NOMBRES[cur],nuevo=k==="nuevo",w=nuevo?{titulo:"",titulo_eu:"",fecha:"",texto:"",texto_eu:"",enlace:"",estado:"",limite:""}:D[n][+k],E=w.estado||"";
+  $("caja").innerHTML="<h3>"+(nuevo?"Nueva ventana":"Editar ventana")+"</h3>"
+   +"<label>Título (castellano)</label><input id='f1' value=\""+esc(w.titulo)+"\"><label>Título (euskera, opcional)</label><input id='f5' value=\""+esc(w.titulo_eu)+"\">"
+   +"<label>Estado</label><select id='f6'><option value=''>— ninguno —</option><option value='abierto'"+(E==="abierto"?" selected":"")+">Plazo abierto</option><option value='cerrado'"+(E==="cerrado"?" selected":"")+">Cerrado</option><option value='pronto'"+(E==="pronto"?" selected":"")+">Próximamente</option></select>"
+   +"<label>Fecha límite</label><input id='f7' type='date' value='"+esc(w.limite)+"'><label>Fecha de la noticia</label><input id='f2' value=\""+esc(w.fecha)+"\" placeholder='2026-11-16'>"
+   +"<label>Texto (castellano)</label><textarea id='f3' rows='4'>"+esc(w.texto)+"</textarea><label>Texto (euskera, opcional)</label><textarea id='f8' rows='4'>"+esc(w.texto_eu)+"</textarea>"
+   +"<label>Enlace (opcional)</label><input id='f4' value=\""+esc(w.enlace)+"\" placeholder='https://...'>"
+   +"<div class='row'><button class='b p' id='ok'>Guardar</button><button class='b' id='no'>Cancelar</button>"+(nuevo?"":"<button class='b' id='del'>Borrar</button>")+"</div>";
+  $("modal").classList.add("on");$("no").onclick=cerrar;
+  $("ok").onclick=()=>{const v={titulo:$("f1").value.trim(),titulo_eu:$("f5").value.trim(),estado:$("f6").value,limite:$("f7").value,fecha:$("f2").value.trim(),texto:$("f3").value.trim(),texto_eu:$("f8").value.trim(),enlace:$("f4").value.trim()};
+    if(!v.titulo)return;if(nuevo){v.imgs=[];v.alta=Date.now();D[n].push(v);}else Object.assign(D[n][+k],v);guarda();cerrar();pinta();};
+  if(!nuevo)$("del").onclick=()=>{if($("del").dataset.s){D[n].splice(+k,1);guarda();cerrar();pinta();}else{$("del").dataset.s=1;$("del").textContent="¿Seguro? Pulsa otra vez";}};}
+function pinta(){
+  cab();nav();
+  const bus=q.trim().length>0,det=!bus&&cur>=0&&ver!==null&&D[NOMBRES[cur]][ver];
+  $("main").innerHTML=bus?resultados():cur===-1?inicio():det?detalle():seccion();
+  $("main").querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>editar(b.dataset.e));
+  $("main").querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{cur=+b.dataset.g;ver=null;pinta();});
+  $("main").querySelectorAll("[data-v]").forEach(a=>a.onclick=e=>{if(e.target.closest("button,a"))return;cur=+a.dataset.s;ver=+a.dataset.v;q="";$("q").value="";pinta();window.scrollTo(0,0);});
+  if(det)bindDet();
+  barra();
+  try{history.replaceState(null,"","#"+(cur<0?"inicio":NOMBRES[cur].toLowerCase()+(ver!==null?"-"+(ver+1):"")));}catch(e){}
+}
+$("q").oninput=e=>{q=e.target.value;ver=null;pinta();};
+$("adminbtn").onclick=()=>{
+  if(admin)return;
+  $("caja").innerHTML="<h3>Administrador</h3>"+(SB_URL?"<label>Correo</label><input id='em' type='email'>":"")+"<label>Contraseña</label><input id='pw' type='password'><p class='f' id='err'></p><div class='row'><button class='b p' id='ok'>Entrar</button><button class='b' id='no'>Cancelar</button></div>";
+  $("modal").classList.add("on");$("no").onclick=cerrar;
+  $("ok").onclick=async()=>{
+  if(SB_URL){try{const r=await fetch(SB_URL+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({email:$("em").value.trim(),password:$("pw").value})});const j=await r.json().catch(()=>({}));if(j.access_token){TOK=j.access_token;admin=true;cerrar();pinta();}else $("err").textContent=r.status===400?"Correo o contraseña incorrectos.":"Error "+r.status+": "+(j.msg||j.error_description||"respuesta inesperada. Revisa SB_URL y SB_KEY.");}catch(e){$("err").textContent="No se pudo conectar. Revisa que SB_URL empiece por https:// y acabe en .supabase.co. Detalle: "+e.message;}return;}
+  };};
+$("cartbtn").onclick=()=>{
+  $("cartel").innerHTML=(D._cfg.logo?"<img class='lo' src='"+esc(D._cfg.logo)+"' alt=''>":"")+"<h1>"+esc(D._cfg.nombre)+"</h1><h2>"+t("esc")+"</h2><div id='qrbig' style='display:inline-block;padding:12px'></div>";
+  try{new QRCode($("qrbig"),{text:location.href.split("#")[0],width:320,height:320});}catch(e){}
+  setTimeout(()=>window.print(),300);};
+async function exportar(){
+  const c=document.documentElement.cloneNode(true);
+  ["nav","main","qrbox","bar","caja","hdr","cartel","toast"].forEach(id=>c.querySelector("#"+id).innerHTML="");
+  c.querySelector("#modal").className="";c.querySelector("#zoom").className="";c.querySelector("#zoom").innerHTML="";
+  c.querySelector("#datos").textContent=JSON.stringify(D).replace(/</g,"\\u003c");
+  const html="<!DOCTYPE html>\n"+c.outerHTML;
+  try{if(window.claude){const d=await claude.use("downloads");if(d){await d.save({filename:"index.html",data:new Blob([html],{type:"text/html"})});return;}}}catch(e){}
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download="index.html";document.body.appendChild(a);a.click();a.remove();}
+const m=location.hash.slice(1).toLowerCase().match(/^([a-z]+)(?:-(\d+))?$/);
+if(m){const i=NOMBRES.findIndex(n=>n.toLowerCase()===m[1]);if(i>=0){cur=i;if(m[2]&&D[NOMBRES[i]][+m[2]-1])ver=+m[2]-1;}}
+pinta();
+if(SB_URL)carga();
+try{new QRCode($("qrbox"),{text:location.href.split("#")[0],width:180,height:180});}catch(e){}
+</script>
+</body>
+</html>
